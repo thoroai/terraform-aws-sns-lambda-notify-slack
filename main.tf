@@ -1,7 +1,6 @@
 module "default_label" {
   source     = "cloudposse/label/null"
   version    = "0.25.0"
-  attributes = concat(module.this.attributes, ["default"])
   context    = module.this.context
 }
 
@@ -16,5 +15,5 @@ module "notify_slack" {
   slack_username       = var.slack_username
   slack_emoji          = var.slack_emoji
   kms_key_arn          = var.kms_key_arn
-  sns_topic_name       = var.sns_topic_name
+  sns_topic_name       = var.sns_topic_name != "" ? var.sns_topic_name : module.default_label.id
 }
